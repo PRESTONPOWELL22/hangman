@@ -1,133 +1,87 @@
 
-// global variables
 
-var word = ["javaScript", "cascadingstylesheets","hypertextMarkupLanguage","Bootstrap"]
-var correctWord = ""
-var letters= []
-var output = []
-var wrongLetters = []
+// GLOBAL VARIABLES
 
-var guessed = 0
-var guessesRemaining = 12
+// variable for my array of correct words
+var words = ['bootstrap', 'cascadingstylesheets', 'hypertextmarkuplanguage', 'javascript']
+
+// variable for the array's length
+var arrLength = words.length
+
+// variable for correct guesses
+var right = 0
+
+// variable for wins
+var wins = 0
+
+// variable for losses
 var losses = 0
-var wins= 0
 
-// console.log(word)
+// variable for hidden word
+var seceretWord = ""
 
-function gameStart() {
-    correctWord = word[Math.floor(Math.random() * word.length)]
-    letters = correctWord.split("")
-    num = letters.length
+// loop that goes through the array
+for(i=0; i<arrLength; i++){
+  console.log(words[i])
+}
 
-// console.log(num)
-// console.log(letters)
-// console.log(correctword)
+// this picks a word and words[wordPicker] = the correct word
+var wordPicker = Math.floor(Math.random() * arrLength);
+console.log(wordPicker)
 
-    guessesRemaining = 12;
-    wrongLetters = [];
-    output = [];
+// console.log(words[wordPicker])
+
+var correctWord = (words[wordPicker])
+console.log(correctWord)
+
+var hiddenWord = correctWord.length
+console.log(hiddenWord)
 
 
-    for(var i = 0; i < num; i++){
-        output.push("_")
-        console.log(output)
-    }
 
-    document.getElementById("secretAnswer").innerHTML = output.join(" ");
-    document.getElementById("game").innerHTML = wins;
-    document.getElementById("losses").innerHTML = losses;
-    document.getElementById("guessesLeft").innerHTML = guessesLeft;
+window.onload = function picksWord(){
+for (i = 0 ; i < hiddenWord ; i++){
+  seceretWord += "_ "
+  // console.log(seceretWord)
+}
+document.getElementById("word").innerHTML=seceretWord
+}
 
-};
 
-function checkAnswer (letter) {
 
-    var letterInWord = false;
-  
-    for(var j = 0; j < num; j++) {
-  
-      if (letter == actualWord[j]) {
-        letterInWord = true;
-      }
-    }
-   
-    if (letterInWord) {
-      for(var j = 0; j < num; j++) {
-        if (actualWord[j] == letter) {
-          output[j] = letter;
-          console.log(output)
-        }         
-      }
-    } else {
-        wrongLetters.push(letter);
-        guessesLeft--;
-    }
-    
-  };
-  
-  
-  gameStart();
-  
-  
-  function rounds() {
-    document.getElementById("guessesLeft").innerHTML = guessesLeft;
-    document.getElementById("answersGuessed").innerHTML = wrongLetters;
-    document.getElementById("secretAnswer").innerHTML = output.join(" ");
-     
-    if(letters.toString() == output.toString()) {
-      wins++
-      document.getElementById("game").innerHTML = wins;
-      play();
-    } else if (guessesLeft===0) {
-        losses++
-        document.getElementById("losses").innerHTML = losses;
-        gameStart();
-    }
-  };
-  
-  //event listener
-  document.onkeypress = function(event) {
-    var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
-    console.log(userGuess);
-    checkAnswer(userGuess);
-    rounds();
-  };
-  
-  
-   //music works!
-    
-  function play(){
-    if (actualWord=="beachboys"){
-      var audio = "<audio autoplay = 'autoplay' >" + "<source src='https://ia800202.us.archive.org/27/items/14TheBeachBoysTheWarmthOfTheSun/The%20Beach%20Boys%20-%20Good%20Vibrations.mp3'></audio>"   
-      document.querySelector("#audio").innerHTML = audio;  
-      var picture = "<img src='https://raw.githubusercontent.com/amr08/week-3-game/master/assets/images/onprinciple-beachboys-surfergirl-500.jpg'>"
-      document.querySelector("#picture").innerHTML = picture; 
-      gameStart();
-    } else if (actualWord == "jackjohnson") {
-        var audio = "<audio autoplay = 'autoplay' >" + "<source src='https://ia601008.us.archive.org/31/items/JackJohnsonSittingWaitingWishingToqueMP3/jack%20johnson%20banana%20pancakes%20-%20[Toque%20MP3].mp3'></audio>"   
-        document.querySelector("#audio").innerHTML = audio;  
-        var picture = "<img src='https://raw.githubusercontent.com/amr08/week-3-game/master/assets/images/800beb7840472ea335bcd4dfe59d4fca.jpg'>"
-        document.querySelector("#picture").innerHTML = picture;               
-        gameStart();
-    } else if (actualWord == "dickdale") {
-        var audio = "<audio autoplay = 'autoplay' >" + "<source src='https://ia801606.us.archive.org/31/items/DickDaleAndTheDeltones-01-50/DickDaleAndTheDel-tones-Misirlou.mp3'></audio>"   
-        document.querySelector("#audio").innerHTML = audio;  
-        var picture = "<img src='https://raw.githubusercontent.com/amr08/week-3-game/master/assets/images/216931.jpg'>"
-        document.querySelector("#picture").innerHTML = picture; 
-        gameStart();
-    } else if (actualWord.toString() == "311") {
-        var audio = "<audio autoplay = 'autoplay' >" + "<source src='https://ia601008.us.archive.org/18/items/311IllBeHereAwhile/311%20-%20I%27ll%20Be%20Here%20Awhile.mp3'></audio>"   
-        document.querySelector("#audio").innerHTML = audio;  
-        var picture = "<img src='https://raw.githubusercontent.com/amr08/week-3-game/master/assets/images/311thumb2_400x400.jpg'>"
-        document.querySelector("#picture").innerHTML = picture; 
-        gameStart(); 
-    } else if (actualWord== "bobmarley") {
-        var audio = "<audio autoplay = 'autoplay' >" + "<source src='https://ia802605.us.archive.org/9/items/BobMarley_201410/Bob%20Marley%20-%20DISCOGRAFIA/Bob%20Marley-Legend/15%20Jamming.mp3'></audio>"   
-        document.querySelector("#audio").innerHTML = audio;  
-        var picture = "<img src='https://raw.githubusercontent.com/amr08/week-3-game/master/assets/images/bob-marley-beach-6929.jpg'>"
-        document.querySelector("#picture").innerHTML = picture; 
-        gameStart();       
-    }
-  
-  };
-  // //end
+
+// }
+
+// // function for a hint
+
+// var hint = function () {
+//   if (correctWord === words[0]) {
+//     catagoryName.innerHTML = "Popular CSS Library"
+//   } else if (chosenCategory === categories[1]) {
+//     catagoryName.innerHTML = "Language for styling the web"
+//   } else if (chosenCategory === categories[2]) {
+//     catagoryName.innerHTML = "The basic language of the web"
+//   }
+//   else{
+//     catagoryName.innerHTML = "The programming language of the web"
+//   }
+// }
+
+// comments = function () {
+//   showLives.innerHTML = "You have " + lives + " lives";
+//   if (lives < 1) {
+//     showLives.innerHTML = "Game Over";
+//   }
+//   for (var i = 0; i < geusses.length; i++) {
+//     if (counter + space === geusses.length) {
+//       showLives.innerHTML = "You Win!";
+//     }
+//   }
+// }
+
+//  
+
+
+
+
+
